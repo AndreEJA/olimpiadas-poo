@@ -45,6 +45,18 @@ public class Cadena {
         return stringBuilder.toString();
     }
 
+    private String LettersOnly(String texto)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = texto.length() - 1; i >= 0; i--)
+        {
+            Character c = texto.charAt(i);
+            if(Character.isLetter(c))
+                stringBuilder.append(c);
+        }
+        return stringBuilder.toString();
+    }
+
     public void Invertir()
     {
         this.Texto = ReversedText(this.Texto);
@@ -52,7 +64,9 @@ public class Cadena {
 
     public Boolean IsPalindrome()
     {
-        return this.Texto.equalsIgnoreCase(ReversedText(this.Texto));
+        String original = LettersOnly(this.Texto);
+        String reverse = LettersOnly(ReversedText(this.Texto));
+        return original.equalsIgnoreCase(reverse);
     }
 
     public void VocalesConsonantes()
@@ -63,10 +77,10 @@ public class Cadena {
 
         for(int i = 0; i < this.Texto.length(); i++)
         {
-            Character c = this.Texto.charAt(i);
+            char c = this.Texto.charAt(i);
             if(Character.isLetter(c))
             {
-                Boolean found = false;
+                boolean found = false;
                 for(Character vocal : vocales)
                 {
                     if(c == vocal) {
