@@ -3,55 +3,38 @@ package modelos;
 import java.util.ArrayList;
 
 public class Torneo {
-    private int id;
+    private static long nextId = 1;
+    private long id;
     private String nombre;
-    private ArrayList<Partida> partidas = new ArrayList<>();
-    private ArrayList<Equipo> equipos = new ArrayList<>();
+    private ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+    private ArrayList<Partida> partidas = new ArrayList<Partida>();
 
-    public Torneo(int id, String nombre) {
-        this.id = id;
+
+    public Torneo(String nombre) {
+        this.id = nextId++;
         this.nombre = nombre;
     }
 
-    public String getNombre() {
-        return nombre;
+
+    public long getId() { return id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String n) { this.nombre = n; }
+    public void addEquipo(Equipo e) { equipos.add(e); }
+    public void removeEquipo(Equipo e) { equipos.remove(e); }
+
+
+    public Partida crearPartida(Equipo a, Equipo b, Juego j, Arbitro ar) {
+        Partida p = new Partida(a,b,j,ar,this);
+        partidas.add(p);
+        return p;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void RegistrarEquipo(Equipo equipo) {
-        equipos.add(equipo);
-    }
+    public void eliminarPartida(Partida p) { partidas.remove(p); }
+    public void eliminarTodasPartidas() { partidas.clear(); }
 
-    public Equipo ObtenerEquipoPorID(int id) {
-        for(Equipo equipo : equipos) {
-            if(equipo.getId() == id)
-                return equipo;
-        }
-        return null;
-    }
 
-    public void AñadirPartida(int idEquipo1, int idEquipo2, Juego juego, Arbitro arbitro) {
-        Equipo equipo1 = ObtenerEquipoPorID(idEquipo1);
-        Equipo equipo2 = ObtenerEquipoPorID(idEquipo2);
-
-        if(equipo1 == null || equipo2 == null) {
-            System.out.println("Error agregando partida: Uno o ambos equipos no estan registrados en el torneo.");
-            return;
-        }
-
-        // Aca existe composición, porque la propia clase crea la partida, por lo que, a la hora de
-        // ser destruida, todas las partidas creadas son destruidas con la clase.
-        partidas.add(new Partida(equipo1, equipo2, juego, arbitro));
-    }
-
-    @Override
-    public String toString() {
-        return "Torneo{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                '}';
-    }
+    public String toString() { return id+":"+nombre+" ("+equipos.size()+" equipos, "+partidas.size()+" partidas)"; }
+    public ArrayList<Equipo> getEquipos() { return equipos; }
+    public ArrayList<Partida> getPartidas() { return partidas; }
 }

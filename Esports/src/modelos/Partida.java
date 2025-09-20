@@ -1,26 +1,29 @@
 package modelos;
 
-
 public class Partida {
-    Equipo equipo1;
-    Equipo equipo2;
-    Juego juego;
-    Arbitro arbitro;
+    private static long nextId = 1;
+    private long id;
+    private Equipo equipoA;
+    private Equipo equipoB;
+    private Juego juego;
+    private Arbitro arbitro;
+    private Torneo torneo;
+    private String resultado;
 
-    public Partida(Equipo equipo1, Equipo equipo2, Juego juego, Arbitro arbitro) {
-        this.equipo1 = equipo1;
-        this.equipo2 = equipo2;
-        this.juego = juego;
-        this.arbitro = arbitro;
+
+    public Partida(Equipo a, Equipo b, Juego j, Arbitro ar, Torneo t) {
+        this.id = nextId++;
+        this.equipoA = a;
+        this.equipoB = b;
+        this.juego = j;
+        this.arbitro = ar;
+        this.torneo = t;
     }
 
-    @Override
+
+    public long getId() { return id; }
+    public void setResultado(String r) { this.resultado = r; }
     public String toString() {
-        return "Partida{" +
-                "equipo1=" + equipo1 +
-                ", equipo2=" + equipo2 +
-                ", juego=" + juego +
-                ", arbitro=" + arbitro +
-                '}';
+        return "Partida{"+id+": "+equipoA.getNombre()+" vs "+equipoB.getNombre()+" juego="+juego.getNombre()+"}";
     }
 }
