@@ -1,12 +1,11 @@
 package modelos.DAOs;
 
-import modelos.Torneo;
+import modelos.Jugador;
 
-public class TorneoDAO extends GenericDAO<Torneo> {
-    public Torneo EncontrarPorID(int id) {
-        for(Torneo torneo : data) {
-            if(torneo.getId() == id)
-                return torneo;
+public class JugadorDAO extends GenericDAO<Jugador> {
+    public Jugador EncontrarPorAlias(String alias) {
+        for (Jugador j : data) {
+            if (j.toString().contains(alias)) return j;
         }
         return null;
     }

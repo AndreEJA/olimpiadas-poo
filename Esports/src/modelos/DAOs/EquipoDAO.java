@@ -1,12 +1,11 @@
 package modelos.DAOs;
 
-import modelos.Torneo;
+import modelos.Equipo;
 
-public class TorneoDAO extends GenericDAO<Torneo> {
-    public Torneo EncontrarPorID(int id) {
-        for(Torneo torneo : data) {
-            if(torneo.getId() == id)
-                return torneo;
+public class EquipoDAO extends GenericDAO<Equipo> {
+    public Equipo EncontrarPorID(int id) {
+        for (Equipo e : data) {
+            if (e.getId() == id) return e;
         }
         return null;
     }
@@ -15,4 +14,5 @@ public class TorneoDAO extends GenericDAO<Torneo> {
         for(int i = 0; i < data.size(); i++)
             System.out.println("#" + (i + 1) + ". " + data.get(i).toString());
     }
+
 }
