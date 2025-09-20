@@ -1,12 +1,12 @@
 package modelos;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Torneo {
     private static long nextId = 1;
     private long id;
     private String nombre;
-    private ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+    private Set<Equipo> equipos = new HashSet<>();
     private ArrayList<Partida> partidas = new ArrayList<Partida>();
 
 
@@ -15,26 +15,51 @@ public class Torneo {
         this.nombre = nombre;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Torneo torneo = (Torneo) o;
+        return id == torneo.id;
+    }
 
-    public long getId() { return id; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String n) { this.nombre = n; }
-    public void addEquipo(Equipo e) { equipos.add(e); }
-    public void removeEquipo(Equipo e) { equipos.remove(e); }
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
+    public boolean inscribirEquipo(Equipo e) {
+        return equipos.add(e);
+    }
 
-    public Partida crearPartida(Equipo a, Equipo b, Juego j, Arbitro ar) {
-        Partida p = new Partida(a,b,j,ar,this);
+    public boolean desinscribirEquipo(Equipo e) {
+        return equipos.remove(e);
+    }
+
+    public Partida crearPartida(Equipo a, Equipo b, Juego juego, Arbitro arbitro) {
+        if (!equipos.contains(a) || !equipos.contains(b)) {
+            throw new IllegalStateException("Los equipos deben estar inscritos en el torneo");
+        }
+        Partida p = new Partida(a, b, juego, arbitro, this);
         partidas.add(p);
         return p;
     }
 
+    public void eliminar() {
+        partidas.clear();
+        equipos.clear();
+    }
 
-    public void eliminarPartida(Partida p) { partidas.remove(p); }
-    public void eliminarTodasPartidas() { partidas.clear(); }
+    public boolean estaInscrito(Equipo e) {
+        return equipos.contains(e);
+    }
 
+    public long getId() { return id; }
+    public String getNombre() { return nombre; }
+    public List<Partida> getPartidas() {return Collections.unmodifiableList(partidas);}
 
-    public String toString() { return id+":"+nombre+" ("+equipos.size()+" equipos, "+partidas.size()+" partidas)"; }
-    public ArrayList<Equipo> getEquipos() { return equipos; }
-    public ArrayList<Partida> getPartidas() { return partidas; }
+    @Override
+    public String toString() {
+        return "Torneo{" + id + ", " + nombre + ", equipos=" + equipos.size() +
+                ", partidas=" + partidas.size() + "}";
+    }
 }

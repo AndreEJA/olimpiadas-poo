@@ -20,10 +20,10 @@ public class Partida {
         this.torneo = t;
     }
 
-
-    public long getId() { return id; }
-    public void setResultado(String r) { this.resultado = r; }
+    @Override
     public String toString() {
-        return "Partida{"+id+": "+equipoA.getNombre()+" vs "+equipoB.getNombre()+" juego="+juego.getNombre()+"}";
+        return "Partida{" + id + ", " + equipoA.getNombre() + " vs " + equipoB.getNombre() +
+                ", juego=" + juego.getNombre() + ", árbitro=" + arbitro.getNombre() +
+                ", torneo=" + torneo.getNombre() + "}";
     }
 }
