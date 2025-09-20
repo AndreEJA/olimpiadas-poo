@@ -18,7 +18,7 @@ public class Sistema {
         System.out.println("Equipos: "+equipos);
         System.out.println("Arbitros: "+arbitros);
         System.out.println("Torneos: "+torneos);
-        for(Torneo t: torneos){
+        for(Torneo t : torneos){
             System.out.println(" Partidas en "+t.getNombre()+": "+t.getPartidas());
         }
     }
